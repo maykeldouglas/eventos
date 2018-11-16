@@ -46,8 +46,9 @@ public class EventoResource {
     @ApiOperation(value = "Cadastra um evento")
     @PostMapping()
     public Evento cadastraEvento(@RequestBody @Valid Evento evento){
-        evento.add(linkTo(methodOn(EventoResource.class).obtemEvento(evento.getCodigo())).withRel("Retorna o evento pelo código informado"));
-        return eventoRepository.save(evento);
+        Evento eventoInserido = eventoRepository.save(evento);
+        eventoInserido.add(linkTo(methodOn(EventoResource.class).obtemEvento(evento.getCodigo())).withRel("Retorna o evento pelo código informado"));
+        return eventoInserido;
     }
 
     @ApiOperation(value = "Exclui um evento")
